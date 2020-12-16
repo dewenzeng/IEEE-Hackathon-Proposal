@@ -2,11 +2,11 @@
 
 Team members
 
-Song Bian, Kyoto University
-Dewen Zeng, University of Notre Dame
-Xinrong Hu, University of Notre Dame
-Qing Lu, University of Notre Dame
-Weiwen Jiang, University of Notre Dame
+- Song Bian, Kyoto University
+- Dewen Zeng, University of Notre Dame
+- Xinrong Hu, University of Notre Dame
+- Qing Lu, University of Notre Dame
+- Weiwen Jiang, University of Notre Dame
 
 # How to use our code
 
