@@ -1,7 +1,7 @@
 
-Team Name: Hackathon ND
+**Team Name:** Hackathon-ND
 
-Team members
+**Team members**
 
 - Song Bian, Kyoto University
 - Dewen Zeng, University of Notre Dame
