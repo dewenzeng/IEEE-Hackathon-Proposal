@@ -7,10 +7,6 @@ from medpy import metric
 # import qU_net_Model
 # import config
 
-# change these folders if you want to use the code on your own machine
-model_infection_dir = '/content/drive/MyDrive/code/covid19/pretrained_model/model_infection/'
-model_lung_dir = '/content/drive/MyDrive/code/covid19/pretrained_model/model_lung/'
-test_data_dir = '/content/drive/MyDrive/code/covid19/dataset/test/'
 threshold = 2
 batch_size = 2
 

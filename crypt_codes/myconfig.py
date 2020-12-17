@@ -29,6 +29,11 @@ parser.add_argument("--momentum", type=float, default=0.9)
 parser.add_argument("--betas", type=tuple, default=(0.9, 0.999))
 parser.add_argument("--lr_scheduler", type=str, default='cos')
 
+# Test config
+parser.add_argument("--model_infection_dir", type=str, default="/afs/crc.nd.edu/user/d/dzeng2/code/covid19/pretrained_model/model_infection/")
+parser.add_argument("--model_lung_dir", type=str, default="/afs/crc.nd.edu/user/d/dzeng2/code/covid19/pretrained_model/model_lung/")
+parser.add_argument("--test_data_dir", type=str, default="/afs/crc.nd.edu/user/d/dzeng2/code/covid19/dataset/test/")
+
 def save_args(obj, defaults, kwargs):
     for k,v in defaults.iteritems():
         if k in kwargs: v = kwargs[k]
