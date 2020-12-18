@@ -4,6 +4,7 @@ import numpy as np
 import U_net_Model
 import scipy.ndimage
 from medpy import metric
+import myconfig
 # import qU_net_Model
 # import config
 
@@ -137,47 +138,50 @@ def final_prediction(image,best_model_fns,threshold=2,filter_predictions=True,lu
         pred=pred*lung_mask
     return pred
 
-def predict_lung_mask(data_array):
+def predict_lung_mask(data_array, args):
     # if lung_mask is an (512, 512, 512) np array, then it will use it to discard FP outside lung_mask.
     # warning, lung_mask must be rescaled
     # save both the normalized and un-normalized mask
 
     best_model_fns = {
-        'X': os.path.join(model_lung_dir, "best_model-X.pth"),
-        'Y': os.path.join(model_lung_dir, "best_model-Y.pth"),
-        'Z': os.path.join(model_lung_dir, "best_model-Z.pth")
+        'X': os.path.join(args.model_lung_dir, "best_model-X.pth"),
+        'Y': os.path.join(args.model_lung_dir, "best_model-Y.pth"),
+        'Z': os.path.join(args.model_lung_dir, "best_model-Z.pth")
     }
     prediction = final_prediction(data_array, best_model_fns, threshold=threshold, lung_mask=None, batch_size=batch_size)
     return prediction
 
-def predict_one_scan(patient_id):
+def predict_one_scan(patient_id, args):
     # if lung_mask is an (512, 512, 512) np array, then it will use it to discard FP outside lung_mask.
     # warning, lung_mask must be rescaled
     # save both the normalized and un-normalized mask
-    data_path = test_data_dir + patient_id + '/' + patient_id + '.npz'
-    label_path = test_data_dir + patient_id + '/' + patient_id + '_label.npz'
+    data_path = args.test_data_dir + patient_id + '/' + patient_id + '.npz'
+    label_path = args.test_data_dir + patient_id + '/' + patient_id + '_label.npz'
     data_array = np.load(data_path)['array']  # the data_array are normalized, with shape (512, 512, 512)
     label_array = np.load(label_path)['array']
 
     best_model_fns = {
-        'X': os.path.join(model_infection_dir, "best_model-X.pth"),
-        'Y': os.path.join(model_infection_dir, "best_model-Y.pth"),
-        'Z': os.path.join(model_infection_dir, "best_model-Z.pth")
+        'X': os.path.join(args.model_infection_dir, "best_model-X.pth"),
+        'Y': os.path.join(args.model_infection_dir, "best_model-Y.pth"),
+        'Z': os.path.join(args.model_infection_dir, "best_model-Z.pth")
     }
 
-    lung_mask = predict_lung_mask(data_array)
+    lung_mask = predict_lung_mask(data_array, args)
 
     prediction = final_prediction(data_array, best_model_fns, threshold=threshold, lung_mask=lung_mask, batch_size=batch_size)
 
     dice = metric.dc(prediction, label_array)
 
-    return dice
+    prediction = final_prediction(data_array, best_model_fns, threshold=threshold, lung_mask=lung_mask, batch_size=batch_size)
+    return prediction, dice
 
 if __name__ == "__main__":
     # Once we have the pretrained model, we can validate our result
-    patient_ids = os.listdir(test_data_dir)
+    args = myconfig.get_config()
+    patient_ids = os.listdir(args.test_data_dir)
     for patient_id in patient_ids:
         print(f'processing patient: {patient_id}')
-        dice = predict_one_scan(patient_id)
+        prediction, dice = predict_one_scan(patient_id, args)
         print(f'The prediction dice is: {dice}')
+        np.savez_compressed(os.path.join('./result',patient_id+'_prediction'),array=prediction)
     pass
