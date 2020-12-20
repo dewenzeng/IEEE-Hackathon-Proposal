@@ -17,7 +17,7 @@ An example of the segmentation result can be seen in the figure below. The left 
 
 ## Performance Evaluation
 
-Our work is based on the pretrained model from this paper: **A Rapid, Accurate and Machine-Agnostic Segmentation and Quantification Method for CT-Based COVID-19 Diagnosis** [link](https://ieeexplore.ieee.org/abstract/document/9115057). We modified the parameters of the original code and add quantization to them in order to reduce the computation overhead. We also add security protocol on top of the network architecture. The security protocols we use (e.g., PAHE and GC) are standard protocols, which are not included in our code. You can refer to [PAHE](https://github.com/snucrypto/HEAAN) and [GC](https://github.com/ojroques/garbled-circuit) if you are interested in their detailed implementation. 
+Our work is based on the pretrained model from this paper: **A Rapid, Accurate and Machine-Agnostic Segmentation and Quantification Method for CT-Based COVID-19 Diagnosis** [link](https://ieeexplore.ieee.org/abstract/document/9115057). We modified the parameters of the original model and add quantization to them in order to reduce the computation overhead. We also add security protocol on top of the network architecture. The security protocols we use (e.g., PAHE and GC) are standard protocols, which are not included in our code. You can refer to [PAHE](https://github.com/snucrypto/HEAAN) and [GC](https://github.com/ojroques/garbled-circuit) if you are interested in their detailed implementation. 
 
 #### What to evaluate?
 
