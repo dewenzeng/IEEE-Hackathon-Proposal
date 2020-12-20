@@ -5,8 +5,8 @@ import U_net_Model
 import scipy.ndimage
 from medpy import metric
 import myconfig
-# import qU_net_Model
-# import config
+import qU_net_Model
+import config
 
 threshold = 2
 batch_size = 2
@@ -16,7 +16,6 @@ def generate_quantize_model(model):
     model_type = 'UNET'
     kconfig = config.Configuration(model_type, config_file)
     kconfig = kconfig.config_dict
-
     qmodel=qU_net_Model.qUNet(in_channels=5,out_channels=2, config=kconfig)
     for (layer, qlayer) in zip(model.named_parameters(), qmodel.named_parameters()):
         for tensor, target_tensor in zip(layer[1], qlayer[1]):
@@ -30,9 +29,9 @@ def load_model(parameters_dict_fn):
     model_dict = torch.load(parameters_dict_fn)["state_dict"]
     model.load_state_dict(model_dict)
     device="cuda:0" if torch.cuda.is_available() else "cpu"
-    model = model.to(device)
-    # qmodel = generate_quantize_model(model)
-    return model
+    # model = model.to(device)
+    qmodel = generate_quantize_model(model)
+    return qmodel
 
 def arr_at_each_location(image,direction,loc):
     arr=[]

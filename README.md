@@ -21,6 +21,6 @@ Our work is based on the pretrained model from this paper: **A Rapid, Accurate a
 
 #### What to evaluate?
 
-Since the ground truth label of the CT volume is not provided by the original paper, we use their pretrained model to generate segmentation masks on the testset and use these masks as the ground truth baseline of our method. We need to evaluate how much the accuracy drops once we apply the security protocol in the inference phase. We report the segmentation accuracy as Dice coefficient in our prediction.py script. The Dice coefficient of our baseline (no quantization and security protocol) is 1.0.
+Since the ground truth label of the CT volume is not provided by the original paper, we use their pretrained model to generate segmentation masks on the testset and use these masks as the ground truth baseline of our method. We need to evaluate **how much the accuracy drops** once we apply the security protocol in the inference phase. Therefore, we report the segmentation accuracy as Dice coefficient in our prediction.py script. The Dice coefficient of our baseline (no quantization and security protocol) is 1.0.
 
 
